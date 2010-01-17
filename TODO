@@ -1,0 +1,23 @@
+0.7:
+    [DONE] * make new functions from 0.7rc optional
+
+Old Todo-list (may be outdated, haven't checked yet)
+
+    * Integrate new workspace grid.
+
+    * Tooltip for workspace name.
+
+    * Write small name into windows.
+
+    * Allow dragging one of multiple window copies to a different workspace,
+      eliminating it if already present on destination.
+
+    * Implement own viewport frame dashing, such that it alternates on
+      neighbouring lines.
+
+    * Use better graphics library to highlight the viewport by making it n%
+      lighter (negative: darker).
+
+    * Scroll viewports and workspaces with mouse wheel(s).  Maybe viewport
+      columns top to bottom, then left to right, then on to next workspace in
+      same order?

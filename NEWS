@@ -1,0 +1,203 @@
+Version 0.7.3 (2010-01-17, Ti Ta TNT)
+
+     * set window-type to dock (Eli Barzilay)
+
+     * ignore the desktop-window (Eli Barzilay)
+
+Version 0.7.2 (2010-01-08, Teqnology)
+
+     * sawfish-pager now depends on Sawfish 1.6.1 as we do now include the
+       sawfish-client header directly
+
+     * sawfish-pager now depends on librep 0.90.5 as it fixes the issue that
+       users don't see strings from pager.jlc in sawfish-config, while they
+       do from pager.jl
+
+     * majorly revised Makefile
+
+     * the following defines are no longer valid:
+		+ USE_SAWFISH_LIBCLIENT
+		+ HAVE_GTK2
+       they are hardcoded to be default from now on.
+       the frameover feature is still optional and can be enabled by passing
+		-DFRAMEOVER
+       to `make'.
+
+     * sawfish.pc is now beeing used to detect which imageloader
+       (gdk-pixbuf-xlib or imlib1) to use (-DHAVE_GDK_PIXBUF is set
+       accordingly)
+
+     * Fixed a bug where the pager doesn't display windows in the proper viewport
+       [Jeremy Hankins]
+
+Version 0.7.1 (2009-12-15, Cosmosonic)
+
+     * sawfish-pager gets the colors to use from sawfishs color-rgb function,
+       unfortunately sawfish-pager expects no alpha value, while sawfish does
+       send one. from this version on sawfish-pager strips off the alpha value.
+
+       Problems with having sawfish-pager not using the color you have set will
+       be gone now. [Jeremey Hankins]
+
+Version 0.7a (2009-12-12, Aurus)
+
+     * make Makefile differ between Sawfish 1.5x and 1.6x
+       fixes installation for Sawfish 1.6x which moved from
+       $prefix/libexecdir to $prefix/libdir (Christopher Bratusek)
+
+     * added debian packaging scripts (Christopher Bratusek)
+
+Version 0.7 (2009-02-28, Mayday - Judgement Day)
+
+    * Draw windows using hatching, to make them not obscure each other
+      (Janek Kozicki)
+
+    * Mark current viewport with "X" (Janek Kozicki)
+
+    * Make hatching and x-mark optional (Johan Bockgård)
+
+    * Respect WINDOW_SKIP property (Janek Kozicki)
+
+    * Merge stock patches from Debian (Janek Kozicki)
+
+    * Added install, uninstall and private-uninstall targets to Makefile
+      (Christopher Bratusek)
+
+    * Removed checks for deprecated versions, just check if sawfish.pc exists 
+      or not (and do checks accordingly) (Christopher Bratusek)
+
+    * Splitt off NEWS and TODO from README, add INSTALL and COPYING
+      (Christopher Bratusek)
+
+Version 0.6 (2002-12-21, Nicolae Ceausescu - Ultima cuvintarea 1989)
+
+    * Moving windows in pager immediately affects real window.
+
+    * Sticky windows can no longer be dragged off-screen where sawfish can't
+      get them back.
+
+    * Can now act as a Gtk plugin, by supplying the id of the window to plug
+      to.  (Thanks to Andreas Büsching)
+
+    * Simpler installation.  The pager executable is now also found by default
+      in ~/.sawfish.
+
+    * Sawfish version now recognized automatically, including fake Read Hat
+      2.0.pre1.  (Thanks to Juho Snellman)
+
+    * Three more late display updates removed.  Late display when sliding
+      however is a sawfish bug (upto 1.2 inclusive), fixed with an included
+      patch not yet applied to sawfish CVS.
+
+    * Pager is again restartable.
+
+    * The stop argument to pager is now moved to second position.
+
+
+Version 0.5a (2002-11-20, Nürnberg anti-Nazi trials 1945)
+
+    * Handles new colour scheme when compiled for sawfish 1.2.  (Thanks to Tim
+      Lee)
+
+    * Eliminated "late display" when some things change.  Late display when
+      (un-)shading however is a sawfish bug (upto 1.2 inclusive), fixed with
+      an included patch not yet applied to sawfish CVS.
+
+    * Moving and resizing of windows gets displayed as it happens.
+
+    * Buffered input saves many system calls and lookahead reading eliminates
+      multiple susccessive window redraws.
+
+    * Require GNU make.  Automatically detect GTK2 (make GTK1=1 to override.)
+      Free choice of compiler and options.
+
+    * Don't hog CPU when sawfish crashes.
+
+
+Version 0.4a (2002-09-11, who the hell are Osama and George?)
+
+    * Optionally paint your own pager.
+
+    * Optionally support GTK2.  (Thanks to Rui Miguel Seabra)
+
+    * Make pager be skipped on taskbar as soon as corresponding GTK2 bug is fixed.
+
+    * Don't frame over current viewport if you have only one.
+
+
+Version 0.3 (2002-07-14, mourning the end of pluralism in France)
+
+    * Two bugfixes (pager size and phantom window on empty pager) relevant if
+      you only display the current workspace in the pager.
+
+
+
+Version 0.2 (2002-07-11)
+
+    * Workspace boundaries are now drawn between workspaces, rather than
+      inside the left and top.  Hence they no longer react to the mouse.  This
+      makes window positions and sizes more consistent.
+
+    * Viewport (if you use this neat feature) boundaries are now drawn as
+      light frames inside each viewport, as there is conceptually no space
+      between viewports where a line could be drawn.  Since GDK's dashed lines
+      are a bit heavy when you have two side by side, a one pixel border is
+      left around the frames.
+
+    * When dragging a window onto a workspace boundary, it goes to the
+      workspace on which the mouse button is released, not where its top left
+      corner is.
+
+    * If windows extend beyond the workspace, through clipping they now have
+      no frame on that side.  This also allows dragging windows with a frame
+      of their actual size, rather than only the visible portion.
+
+    * Redundant commands are identified through caching, reducing interprocess
+      communication and redrawing.
+
+    * Remove -DFRAMEOVER from the Makefile to eliminate the dashed line frame
+      that goes above the windows.
+
+
+Version 0.1 (2002-04-12)
+
+This is a complete reimplementation of spager 0.16, without the bugs, and with new features:
+
+    * Current viewport gets framed over all else, so you can see it even when
+      it's fully covered.  (Satyaki, author of spager, feels this should be a
+      user option.  Anybody else for that?)
+
+    * viewport gets displayed properly even when it's not aligned to multiple
+      of screen dimensions (as is easily achieved with my move-viewport
+      patch.)
+
+    * ignoreds are by default omitted
+
+    * viewports are by default proportional to your screen
+
+    * copies are, and stickies can be shown on every workspace and/or viewport
+
+    * pager-show-all-workspaces works properly
+
+    * click on window will focus that by default
+
+    * click anywhere can optionally warp pointer to corresponding spot
+
+    * last row and column are as big as others
+
+    * Result of "Send window to/Copy to previous or next" now gets shown
+      immediately
+
+    * pager-executable defaults to be in sawfish-exec-directory
+
+    * replaced merlin/fancy-message with standard tooltips
+
+    * also show button bindings when generally enabled
+
+    * avoid tooltip flicker
+
+    * streamlined code (lisp is only 1/2 and C 3/4 the size of spager's)
+
+    * use define-structure, keeping most symbols out of the global namespace
+
+    * make dependencies between customization options explicit

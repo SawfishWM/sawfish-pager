@@ -1,0 +1,17 @@
+A pager is a map of your desktop.  As maps go, it shows not only the visible
+part (your current viewport), but, if you are so configured, also the parts
+that extend beyond the sides of your screen.  Also, if you have more than one
+workspace, the pager will follow you to where you are, or optionally show all
+workspaces at once.  Of course you can select viewports and windows, and also
+move or raise/lower the latter.
+
+Activation
+
+Versions are not intercompatible with older ones!  Make sure you reload both
+the lisp module and the external program, for example by restarting sawfish.
+
+In your resource file you could add something like:
+
+(require 'sawfish.wm.ext.pager)
+(add-hook 'after-initialization-hook pager t)
+

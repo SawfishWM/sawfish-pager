@@ -1,0 +1,25 @@
+NOTES:
+
+A)
+
+You need either version 1.3.5.1 (or older) of sawfish, or 1.5.0svn revision 4370.
+
+Older svn revisions of 1.5.0 will not work, because sawfish.pc is missing two values
+here: libexecdir and sawfishhosttype
+
+B)
+
+If you use sawfish 1.3.5.1 (or older) you need to have sed and gawk installed, too.
+
+C)
+
+There's no proper way to figure out the libexecdir of sawfish >= 1.3.5.1, so it's a guess.
+
+If you didn't change the libexecdir of sawfish explicitly everything is ok, else adjust the Makefile. 
+
+Default is ($prefix/libexec/sawfish/$version/$host/ eg /usr/libexec/sawfish/1.5.0/i686-pc-linux-gnu/)
+
+INSTALLATION:
+
+make
+make install
