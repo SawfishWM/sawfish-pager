@@ -87,6 +87,10 @@ PAGER_JL_DIR="${SAWFISH_PREFIX}/share/sawfish/${SAWFISH_VERSION}/lisp/sawfish/wm
 AC_SUBST(PAGER_C_DIR)
 AC_SUBST(PAGER_JL_DIR)
 
+gitdate=`date +%y%m%d`
+
+AC_SUBST(gitdate)
+
 AC_CONFIG_FILES([
 Makefile
 sawfish-pager.pc
