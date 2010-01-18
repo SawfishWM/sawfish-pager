@@ -1,5 +1,12 @@
 Version 0.7.3 (2010-01-17, Ti Ta TNT)
 
+     * added autogen.sh
+     * added configure script
+     * added sawfish-pager.pc
+     * major Makefile.in rework
+     * improved debian packaging scripts
+	-- Christopher Bratusek
+
      * set window-type to dock (Eli Barzilay)
 
      * ignore the desktop-window (Eli Barzilay)
