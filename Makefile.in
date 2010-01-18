@@ -44,10 +44,10 @@ uninstall:
 	rm -f $(DESTDIR)@PAGER_C_DIR@/pager
 
 gitclean: distclean
-	rm -f debian/changelog debian/control
 	rm -rf autom4te.cache
 	rm -f aclocal.m4 configure
 	-fakeroot debian/rules clean
+	rm -f debian/changelog debian/control
 
 distclean: clean
 	rm -f Makefile config.cache config.h config.log config.status
