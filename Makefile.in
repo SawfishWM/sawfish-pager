@@ -1,0 +1,57 @@
+# Makefile -- makefile for sawfish-pager
+#
+# Copyright (C) 2009-2010 Christopher Bratusek <zanghar@freenet.de>
+# Copyright (C) 2007-2008 Janek Kozicki <janek_listy@wp.pl>
+# Copyright (C) 2002      Daniel Pfeiffer <occitan@esperanto.org>
+# Copyright (C) 2000      Satyaki Das <satyaki@theforce.stanford.edu>
+#                         Hakon Alstadheim <hakon.alstadheim@oslo.mail.telia.com>
+#                         Andreas Büsching <crunchy@tzi.de>
+#
+# This file is part of sawfish-pager.
+#
+# sawfish-pager is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# sawfish-pager is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with sawfish-pager; see the file COPYING.   If not, write to
+# the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+
+CFLAGS = @GTK_CFLAGS@ @IMAGE_LOADER_CFLAGS@
+LDFLAGS = -Wl,-rpath @SAWFISH_CLIENT_LIB_DIR@ @SAWFISH_CLIENT_LIB_DIR@/client.so @GTK_LIBS@ @IMAGE_LOADER_LIBS@
+
+all: pager pager.jlc
+
+%.jlc: %.jl
+	sawfish --batch --no-rc compiler -f compile-batch $^
+
+install: all
+	mkdir -p  $(DESTDIR)@PAGER_C_DIR@
+	mkdir -p $(DESTDIR)@PAGER_JL_DIR@
+	install -m644 pager.jl $(DESTDIR)@PAGER_JL_DIR@
+	install -m644 pager.jlc $(DESTDIR)@PAGER_JL_DIR@
+	install -m755 pager $(DESTDIR)@PAGER_C_DIR@
+
+uninstall:
+	rm -f $(DESTDIR)@PAGER_JL_DIR@/pager.jl
+	rm -f $(DESTDIR)@PAGER_JL_DIR@/pager.jlc
+	rm -f $(DESTDIR)@PAGER_C_DIR@/pager
+
+gitclean: distclean
+	rm -f debian/changelog debian/control
+	rm -rf autom4te.cache
+	rm -f aclocal.m4 configure
+	-fakeroot debian/rules clean
+
+distclean: clean
+	rm -f Makefile config.cache config.h config.log config.status
+	rm -f sawfish-pager.pc
+
+clean:
+	rm -f pager pager.jlc
