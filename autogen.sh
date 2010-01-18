@@ -17,7 +17,7 @@ if [ -f configure.in ]; then
       echo "Running autoheader"
       autoheader || exit 1
   fi
-  if grep "AM_PROG_LIBTOOL" configure.in >/dev/null; then
+  if grep "AC_PROG_LIBTOOL" configure.in >/dev/null; then
     echo "Running libtoolize"
     lver=$(libtool --version | grep 1.5)
     if [ "x${lver}" != "x" ]; then
