@@ -18,6 +18,7 @@ PKG_CHECK_MODULES(REP, librep >= ${REP_MIN_VER}
 		  ,AC_MSG_ERROR([librep ${REP_MIN_VER} is required to compile Sawfish-Pager]))
 
 REP_COMMON_EXEC_DIR=`pkg-config --variable=repcommonexecdir librep`
+REP_VERSION=`pkg-config --modversion librep`
 
 AC_SUBST(REP_MIN_VER)
 AC_SUBST(REP_COMMON_EXEC_DIR)
@@ -28,6 +29,8 @@ PKG_CHECK_MODULES(GTK, gtk+-2.0 >= ${GTK_MIN_VER}
 		  ,GTK_CFLAGS="`pkg-config --cflags gtk+-2.0`"
 		  GTK_LIBS="`pkg-config --libs gtk+-2.0`"
 		  ,AC_MSG_ERROR([GTK+ ${GTK_MIN_VER} is required to compile Sawfish-Pager]))
+
+GTK_VERSION=`pkg-config --modversion gtk+-2.0`
 
 AC_SUBST(GTK_MIN_VER)
 AC_SUBST(GTK_CFLAGS)
@@ -92,3 +95,35 @@ debian/changelog
 
 AC_OUTPUT
 
+echo "
+  == == == == == == == == == == == == ==
+
+  sawfishpager:	$version '$CODE_NAME'
+
+  == == == == == == == == == == == == ==
+
+  prefix:	$SAWFISH_PREFIX
+  pager.c dir:	$PAGER_C_DIR
+  pager.jl dir:	$PAGER_JL_DIR
+
+  == == == == == == == == == == == == ==
+
+  compiler:	$CC
+  cflags:	$CFLAGS $DEVELOPMENT_CFLAGS
+  preprocessor:	$CPP
+  cppflags:	$CPPFLAGS
+  ldflags:	$LDFLAGS
+  makeflags:	$MAKEFLAGS
+
+  == == == == == == == == == == == == ==
+
+  rep:		$REP_VERSION
+  gtk+:		$GTK_VERSION
+  sawfish:	$SAWFISH_VERSION
+
+  == == == == == == == == == == == == ==
+
+  image loader:	$IMAGE_LOADER
+
+  == == == == == == == == == == == == ==
+  "
