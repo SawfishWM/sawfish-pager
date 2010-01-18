@@ -1,4 +1,4 @@
-sawfish-pager (0.7.3-1nano) unstable; urgency=low
+sawfish-pager (@version@~@gitdate@-1nano) unstable; urgency=low
 
   * new upstream release
 
