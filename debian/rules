@@ -10,7 +10,15 @@ else
 	CFLAGS += -O2
 endif
 
-build: build-stamp
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+
+	./configure
+
+	touch configure-stamp
+
+build: build-stamp configure-stamp
 build-stamp:
 	dh_testdir
 
