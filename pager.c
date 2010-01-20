@@ -389,7 +389,6 @@ void draw_pager( GtkWidget *widget )
     }
   }
 
-#ifdef FRAMEOVER
   /* frame the current viewport above all else in case it's covered */
   if( vp_width < ws_width-1 || vp_height < ws_height-1 )
   {
@@ -407,7 +406,6 @@ void draw_pager( GtkWidget *widget )
       gdk_draw_line(pixmap,gc[hilit_bg],vp_x + 2, vp_height-1 + vp_y     , vp_width-1 + vp_x    ,               vp_y + 2);
     }
   }
-#endif
 
   gtk_widget_draw( widget, &update_rect );
 }
