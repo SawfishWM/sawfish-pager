@@ -1,0 +1,54 @@
+# Copyright 1999-2010 Gentoo Technologies, Inc.
+# Distributed under the terms of the GNU General Public License v2
+
+
+DESCRIPTION="The native pager of the Sawfish windowmanager"
+HOMEPAGE="http://sawfish.wikia.com"
+SRC_URI="http://download.tuxfamily.org/sawfishpager/${P}.tar.bz2"
+RESTRICT="nomirror"
+SLOT="0"
+LICENSE="GPL-2"
+KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc x86"
+
+
+DEPEND="|| ( >=x11-wm/sawfish-@SAWFISH_MIN_VER@
+		x11-wm/sawfish-git )
+	>=dev-libs/librep-@REP_MIN_VER@
+	>=x11-libs/gtk+-@GTK_MIN_VER@"
+
+RDEPEND="${DEPEND}"
+
+src_unpack() {
+
+	unpack ${A}
+	cd "${S}"
+
+}
+
+src_compile() {
+
+	econf "$@" || die "configure failed"
+	emake || die "make failed"
+
+}
+
+src_install() {
+
+	emake DESTDIR=${D} install || die "make install failed"
+	dodoc COPYING INSTALL Makefile NEWS README TODO
+	
+}
+
+pkg_postinst() {
+
+    einfo
+    einfo "To use sawfish-pager add:"
+    einfo
+    einfo "(require 'sawfish.wm.ext.pager)"
+    einfo "(add-hook 'after-initialization-hook pager t)"
+    einfo
+    einfo "in your ~/.sawfishrc file."
+    einfo
+
+}
+

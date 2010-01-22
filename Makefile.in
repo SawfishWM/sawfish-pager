@@ -46,7 +46,7 @@ uninstall:
 gitclean: distclean
 	rm -rf autom4te.cache
 	rm -f aclocal.m4 configure
-	-fakeroot debian/rules clean
+	-fakeroot debian/rules clean sawfish-pager*.ebuild
 	rm -f debian/changelog debian/control
 
 distclean: clean

@@ -13,6 +13,8 @@ Version 0.7.3 (2010-01-XX, Ti Ta TNT)
 
      * -DFRAMEOVER is now invalid, hardcoded (Christopher Bratusek)
 
+     * added an ebuild (fuchur)
+
 Version 0.7.2 (2010-01-08, Teqnology)
 
      * sawfish-pager now depends on Sawfish 1.6.1 as we do now include the
