@@ -13,24 +13,9 @@ KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc x86"
 
 DEPEND="|| ( >=x11-wm/sawfish-@SAWFISH_MIN_VER@
 		x11-wm/sawfish-git )
-	>=dev-libs/librep-@REP_MIN_VER@
-	>=x11-libs/gtk+-@GTK_MIN_VER@"
+	>=dev-libs/librep-@REP_MIN_VER@"
 
 RDEPEND="${DEPEND}"
-
-src_unpack() {
-
-	unpack ${A}
-	cd "${S}"
-
-}
-
-src_compile() {
-
-	econf "$@" || die "configure failed"
-	emake || die "make failed"
-
-}
 
 src_install() {
 
