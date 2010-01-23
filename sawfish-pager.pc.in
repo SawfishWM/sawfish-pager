@@ -1,0 +1,11 @@
+prefix=@SAWFISH_PREFIX@
+
+pagercdir=@PAGER_C_DIR@
+pagerjldir=@PAGER_JL_DIR@
+
+imageloader=@SAWFISH_IMAGE_LOADER@
+
+Name: sawfish-pager
+Description: Sawfishs Native Pager
+Version: @version@
+Requires: librep gtk+-2.0 gdk-pixbuf-xlib-2.0 sawfish
