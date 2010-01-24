@@ -29,7 +29,7 @@ build-stamp:
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp
+	rm -f configure-stamp build-stamp
 
 	-$(MAKE) clean
 
