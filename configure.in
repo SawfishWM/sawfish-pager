@@ -97,11 +97,12 @@ sawfish-pager.pc
 debian/control
 debian/changelog
 sawfish-pager.ebuild
+sawfish-pager.spec
 ])
 
 AC_OUTPUT
 
-mv sawfish.ebuild sawfish-pager-$version.ebuild
+mv sawfish-pager.ebuild sawfish-pager-$version.ebuild
 
 echo "
   == == == == == == == == == == == == ==
