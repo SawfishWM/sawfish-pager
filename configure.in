@@ -1,8 +1,8 @@
-AC_INIT(Sawfish-Pager, 0.7.3)
+AC_INIT(Sawfish-Pager, 0.7.4)
 
-version="0.7.3"
+version="0.7.4"
 AC_SUBST(version)
-CODE_NAME="Ti Ta TNT"
+CODE_NAME="Nu Style"
 
 AC_CONFIG_HEADER([config.h])
 
