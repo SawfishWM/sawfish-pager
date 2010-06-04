@@ -464,7 +464,6 @@ Optional STOP, if non-nil, stops the pager instead."
     (when process
       (kill-process process)
       (setq process nil))
-    (setenv "SAWFISHDOCFILE" "/usr/lib/sawfish/1.6.0/x86_64-pc-linux-gnu/DOC_PAGER")
     (unless stop
       (setq process
 	    (make-process () (lambda ()

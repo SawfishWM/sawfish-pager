@@ -33,8 +33,6 @@
 #include <sawfish/sawfish.h>
 #include <gdk/gdkx.h>
 
-/* #define DOCPAGER "/usr/lib/sawfish/1.6.0/x86_64-pc-linux-gnu/DOC_PAGER" */
-
 enum { bg, hilit_bg, win, focus_win, win_border, vp_divider, ws_divider, vp_frame };
 int hatch = 0;
 int xmark = 0;
@@ -96,8 +94,6 @@ int main( int argc, char *argv[] )
   if( client_open( NULL ) )
     exit( 1 );
   atexit( client_close );
-
- /*  Fset (Qdocumentation_file, rep_string_dup(DOCPAGER)); */
 
   window = argc == 2 ?
     gtk_plug_new( strtol( argv[1], NULL, 10 )) :
