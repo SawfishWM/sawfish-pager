@@ -1,5 +1,13 @@
 Version 0.7.4 (2010-XX-XX, Nu Style)
 
+     * removed some unused bits of code (Christopher Bratusek)
+
+     * fixed a bug regarding bad-closures beeing produces by sticky windows
+     * fixed a bug that caused sticky windows to not show up if:
+	  pager-stickies-on-all-viewports is nil
+	+ pager-stickies-on-all-workspaces is t
+		-- Jeremy Hankins
+
 Version 0.7.3 (2010-01-24, Ti Ta TNT)
 
      * added autogen.sh

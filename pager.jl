@@ -264,7 +264,12 @@
                                    '(0 0))))))
                           (if (and pager-stickies-on-all-workspaces
                                    (window-get w 'sticky))
-                              ws-list
+                              ;; List every workspace:
+                              (let ((limits (workspace-limits))
+                                    (l))
+                                (do ((i (cdr limits) (1- i)))
+                                    ((< i (car limits)) l)
+                                  (setq l (cons i l))))
                             (or (window-workspaces w)
                                 (list (- current-workspace
                                          (car ws-limits)))))))
@@ -300,8 +305,8 @@
                                ,@r)))
                       ((loop l1 i (1- j) r)))))
           (mapcar (lambda (ws)
-                    (let ((vp-x (nth 4 (car l1)))
-                          (vp-y (nth 5 (car l1))))
+                    (let ((vp-x (nth 4 ws))
+                          (vp-y (nth 5 ws)))
                       `(,(window-id w)
                         ,(+ (scale (+ x vp-x) 'x) (car ws))
                         ,(+ (scale (+ y vp-y)) (cadr ws))
