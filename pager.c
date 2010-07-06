@@ -111,10 +111,10 @@ int main( int argc, char *argv[] )
   gtk_box_pack_start( GTK_BOX( vbox ), drawing_area, FALSE, FALSE, 0 );
 
   /* Signals to quit */
-  gtk_signal_connect( GTK_OBJECT( window ), "delete_event",
-		      GTK_SIGNAL_FUNC( delete_event ), NULL );
-  gtk_signal_connect( GTK_OBJECT( window ), "destroy",
-		      GTK_SIGNAL_FUNC( destroy_event ), NULL );
+  g_signal_connect( GTK_OBJECT( window ), "delete_event",
+		      G_CALLBACK( delete_event ), NULL );
+  g_signal_connect( GTK_OBJECT( window ), "destroy",
+		      G_CALLBACK( destroy_event ), NULL );
 
   /* Wait for input from standard input */
   gdk_input_add( 0, GDK_INPUT_READ,
@@ -122,14 +122,14 @@ int main( int argc, char *argv[] )
 		 drawing_area );
 
   /* Change the viewport when a button is pressed */
-  gtk_signal_connect( GTK_OBJECT( drawing_area ), "motion_notify_event",
-		     (GtkSignalFunc) motion_notify_event, NULL );
-  gtk_signal_connect( GTK_OBJECT( drawing_area ), "button_press_event",
-		     (GtkSignalFunc) button_press_event, NULL );
-  gtk_signal_connect( GTK_OBJECT( drawing_area ), "button_release_event",
-		     (GtkSignalFunc) button_release_event, NULL );
-  gtk_signal_connect( GTK_OBJECT( drawing_area ), "leave_notify_event",
-		     (GtkSignalFunc) leave_notify_event, NULL );
+  g_signal_connect( GTK_OBJECT( drawing_area ), "motion_notify_event",
+		     (GCallback) motion_notify_event, NULL );
+  g_signal_connect( GTK_OBJECT( drawing_area ), "button_press_event",
+		     (GCallback) button_press_event, NULL );
+  g_signal_connect( GTK_OBJECT( drawing_area ), "button_release_event",
+		     (GCallback) button_release_event, NULL );
+  g_signal_connect( GTK_OBJECT( drawing_area ), "leave_notify_event",
+		     (GCallback) leave_notify_event, NULL );
   gtk_widget_set_events( drawing_area, GDK_EXPOSURE_MASK
 			            | GDK_LEAVE_NOTIFY_MASK
 			            | GDK_BUTTON_PRESS_MASK
@@ -138,10 +138,10 @@ int main( int argc, char *argv[] )
 		                    | GDK_POINTER_MOTION_HINT_MASK );
 
   /* Initialize and draw the pixmap */
-  gtk_signal_connect( GTK_OBJECT( drawing_area ), "expose_event",
-		     (GtkSignalFunc) expose_event, NULL );
-  gtk_signal_connect( GTK_OBJECT( drawing_area ), "configure_event",
-		     (GtkSignalFunc) configure_event, NULL );
+  g_signal_connect( GTK_OBJECT( drawing_area ), "expose_event",
+		     (GCallback) expose_event, NULL );
+  g_signal_connect( GTK_OBJECT( drawing_area ), "configure_event",
+		     (GCallback) configure_event, NULL );
 
   gtk_widget_show( drawing_area );
   gtk_widget_show( vbox );
@@ -190,8 +190,8 @@ inline void clipbox( int color, gint filled,
 
 gint expose_event( GtkWidget *widget, GdkEventExpose *event, gpointer data )
 {
-  gdk_draw_pixmap( widget->window,
-		  widget->style->fg_gc[GTK_WIDGET_STATE( widget )],
+  gdk_draw_drawable( widget->window,
+		  widget->style->fg_gc[gtk_widget_get_state( widget )],
 		  pixmap,
 		  0, 0, 0, 0,
 		  width, height );
@@ -293,7 +293,7 @@ gint configure_event( GtkWidget *widget, GdkEvent *event, gpointer data )
   int i;
 
   if( pixmap ) {
-    gdk_pixmap_unref( pixmap );
+    g_object_unref( pixmap );
     for( i = bg; i <= vp_frame; i++ )
       gdk_gc_unref( gc[i] );
   }
@@ -321,7 +321,7 @@ gint configure_event( GtkWidget *widget, GdkEvent *event, gpointer data )
 void make_background()
 {
   if( background )
-    gdk_pixmap_unref( background );
+    g_object_unref( background );
   if( ! (*bg_filename &&
 	 (background = gdk_pixmap_create_from_xpm( window->window, NULL, NULL, bg_filename ))) )
   {
@@ -573,12 +573,7 @@ void parse_stdin()
 	colors[i].red = get_number();
 	colors[i].green = get_number();
 	colors[i].blue = get_number();
-	/*
-	  gdk_color_alloc is deprecated, so it may be better
-	  to replace to this:
-	  gdk_colormap_alloc_color( cmap, &colors[i], FALSE, TRUE );
-	*/
-	gdk_color_alloc( cmap, &colors[i] );
+	gdk_colormap_alloc_color( cmap, &colors[i], FALSE, TRUE );
       }
       break;
     case '\0':
