@@ -1,5 +1,15 @@
 Version 0.7.5 (2010-XX-XX, 鳥追い Tori-oi)
 
+     * Add CFLAGS to disable deprecated GTK+/GLIB functions/macros
+     * Modernize SawfishPager:
+       - replace gtk_signal_connect by g_signal_connect
+       - replace GTK_SIGNAL_FUNC by G_CALLBACK
+       - replace GtkSignalFunc by GCallback
+       - replace gdk_draw_pixmap by gdk_draw_drawable
+       - replace gdk_pixmap_unref by g_object_unref
+       - replace gdk_color_alloc by gdk_colormap_alloc_color
+		-- Christopher Bratusek
+
      * Indifferent pager fix
        Pager did not respond to clicks / print tooltip if you require
        the pager module somewhere else from ~/.sawfish/rc. This is
