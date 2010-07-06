@@ -38,6 +38,7 @@
     (open rep
 	  rep.io.files
 	  rep.io.processes
+	  rep.structures
 	  rep.system
 	  sawfish.wm.colors
 	  sawfish.wm.misc
@@ -98,12 +99,12 @@
       :after-set resize)
 
     (defcustom pager-focus t
-      "Whether Button1 focuses the clicked window"
+      "Button1 focuses the clicked window"
       :type boolean
       :group pager)
 
     (defcustom pager-warp-cursor nil
-      "Whether Button1 warps the cursor to the clicked point"
+      "Button1 warps the cursor to the clicked point"
       :type boolean
       :group pager)
 
@@ -132,7 +133,7 @@
       :after-set color)
 
     (defcustom pager-background ""
-      "Pager background, a XPM file"
+      "Pager background, an XPM file"
       :type file-name
       :tooltip "Create this from a pager screenshot in a paint program."
       :group pager
@@ -169,7 +170,7 @@
     :after-set (lambda () (send-xmark)))
 
   (defcustom pager-tooltips-enabled t
-    "Enable display of window labels"
+    "When focused, show window name and pager usage."
     :type boolean
     :group pager)
 
@@ -178,6 +179,9 @@
 	(concat (user-home-directory) "/.sawfish/pager")
       (concat sawfish-exec-directory "/pager")))
 
+  (defvar pager-output-stream nil
+    "Pager's output stream.")
+  
   ;; Remembers the number of workspaces...
   (define ws-limits)
 
@@ -471,10 +475,11 @@ Optional STOP, if non-nil, stops the pager instead."
       (setq process nil))
     (unless stop
       (setq process
-	    (make-process () (lambda ()
-			       (and process
-				    (not (process-in-use-p process))
-				    (setq process nil))))
+	    (make-process pager-output-stream
+			  (lambda ()
+			    (and process
+				 (not (process-in-use-p process))
+				 (setq process nil))))
 	    cache
 	    (mapcar list '(?w ?f ?v ?s ?c ?b ?h ?x)))
       (if plug-to
@@ -578,4 +583,10 @@ pager thinks the position of the window is."
 Button2-Click  raise/lower window
 Button3-Move   drag window"))
 	       id)))
-	(remove-tooltip)))))
+	(remove-tooltip))))
+
+  ;; Push this module into the module 'user'.
+  ;; pager.c invokes functions in this module via client-eval which
+  ;; lives in 'user'.
+  (user-require (structure-name (current-structure)))
+  )

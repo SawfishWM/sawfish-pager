@@ -1,17 +1,36 @@
-A pager is a map of your desktop.  As maps go, it shows not only the visible
-part (your current viewport), but, if you are so configured, also the parts
-that extend beyond the sides of your screen.  Also, if you have more than one
-workspace, the pager will follow you to where you are, or optionally show all
-workspaces at once.  Of course you can select viewports and windows, and also
-move or raise/lower the latter.
+** Overview **
 
-Activation
+Sawfish-pager gives:
+* the thumbnail view of your entire desktop, including currently off
+  workspaces.
+* a shortcut. By a single click, you can go to another (distant)
+  workspace, or to a window there. You can also move or raise / lower
+  a window.
 
-Versions are not intercompatible with older ones!  Make sure you reload both
-the lisp module and the external program, for example by restarting sawfish.
+Sawfish-pager is written in both C and lisp.
+
+For installation instruction, read the file "INSTALL".
+
+** Components **
+
+Sawfish pager consists of a lisp file "pager.jl" and an executable
+"pager".
+
+** Activation **
 
 In your resource file you could add something like:
 
 (require 'sawfish.wm.ext.pager)
 (add-hook 'after-initialization-hook pager t)
 
+** Mouse operation **
+
+Button1-Click:  select viewport (and optionally window)
+Button2-Click:  raise/lower window
+Button3-Move :  drag window
+
+Currently mouse binding is not configurable.
+
+** Configuration **
+
+Many options are provided. As usual, use the Sawfish configurator.

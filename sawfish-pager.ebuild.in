@@ -1,6 +1,10 @@
 # Copyright 1999-2010 Gentoo Technologies, Inc.
 # Distributed under the terms of the GNU General Public License v2
 
+# This is *not* an official ebuild of any distributions.
+# After the configure script is run, required package versions are
+# filled in. But other than that, there's no guarantee this is a
+# correct ebuild.
 
 DESCRIPTION="The native pager of the Sawfish windowmanager"
 HOMEPAGE="http://sawfish.wikia.com"
@@ -9,7 +13,6 @@ RESTRICT="nomirror"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc x86"
-
 
 DEPEND="|| ( >=x11-wm/sawfish-@SAWFISH_MIN_VER@
 		x11-wm/sawfish-git )
@@ -21,19 +24,19 @@ src_install() {
 
 	emake DESTDIR=${D} install || die "make install failed"
 	dodoc COPYING INSTALL Makefile NEWS README TODO
-	
+
 }
 
 pkg_postinst() {
 
-    einfo
-    einfo "To use sawfish-pager add:"
-    einfo
-    einfo "(require 'sawfish.wm.ext.pager)"
-    einfo "(add-hook 'after-initialization-hook pager t)"
-    einfo
-    einfo "in your ~/.sawfishrc file."
-    einfo
+	einfo
+	einfo "To use sawfish-pager add:"
+	einfo
+	einfo "(require 'sawfish.wm.ext.pager)"
+	einfo "(add-hook 'after-initialization-hook pager t)"
+	einfo
+	einfo "in your ~/.sawfishrc file."
+	einfo
 
 }
 

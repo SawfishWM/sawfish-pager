@@ -150,7 +150,7 @@ int main( int argc, char *argv[] )
 		  gdk_atom_intern( "_NET_WM_STATE_SKIP_PAGER", FALSE ),
 		  gdk_atom_intern( "_NET_WM_STATE_SKIP_TASKBAR", FALSE ));
 
-  gtk_window_set_type_hint(window, GDK_WINDOW_TYPE_HINT_DOCK);
+  gtk_window_set_type_hint( GTK_WINDOW(window), GDK_WINDOW_TYPE_HINT_DOCK);
 
   gtk_widget_show( window );
   gtk_main();
@@ -573,6 +573,11 @@ void parse_stdin()
 	colors[i].red = get_number();
 	colors[i].green = get_number();
 	colors[i].blue = get_number();
+	/*
+	  gdk_color_alloc is deprecated, so it may be better
+	  to replace to this:
+	  gdk_colormap_alloc_color( cmap, &colors[i], FALSE, TRUE );
+	*/
 	gdk_color_alloc( cmap, &colors[i] );
       }
       break;
