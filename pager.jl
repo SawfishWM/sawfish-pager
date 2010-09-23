@@ -33,7 +33,8 @@
 	    pager-change-depth
 	    pager-goto
 	    pager-move-window
-	    pager-tooltip)
+	    pager-tooltip
+	    pager-select)
 
     (open rep
 	  rep.io.files
@@ -48,6 +49,7 @@
 	  sawfish.wm.stacking
 	  sawfish.wm.util.window-order
 	  sawfish.wm.viewport
+	  sawfish.wm.commands.viewport-extras
 	  sawfish.wm.windows
 	  sawfish.wm.workspace)
 
@@ -172,6 +174,12 @@
   (defcustom pager-tooltips-enabled t
     "When focused, show window name and pager usage."
     :type boolean
+    :group pager)
+
+  (defcustom pager-select-type 'workspace
+    "When scrolling with mouse on pager, select either next
+workspace, viewport or none."
+    :type (choice workspace viewport none)
     :group pager)
 
   (defvar pager-executable
@@ -584,6 +592,17 @@ Button2-Click  raise/lower window
 Button3-Move   drag window"))
 	       id)))
 	(remove-tooltip))))
+
+  (define (pager-select direction)
+    (if (eq pager-select-type 'workspace)
+        (progn
+	  (if (eq direction 'previous)
+	      (previous-workspace 1)
+	    (next-workspace 1)))
+      (if (eq direction 'previous)
+	  (move-viewport-previous)
+	(move-viewport-next))))
+
 
   ;; Push this module into the module 'user'.
   ;; pager.c invokes functions in this module via client-eval which
