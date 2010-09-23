@@ -642,14 +642,14 @@ static void wmspec_change_state( gboolean add, GdkWindow *window,
   xev.xclient.type = ClientMessage;
   xev.xclient.serial = 0;
   xev.xclient.send_event = True;
-  xev.xclient.display = gdk_display;
+  xev.xclient.display = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
   xev.xclient.window = GDK_WINDOW_XID (window);
   xev.xclient.message_type = gdk_x11_get_xatom_by_name ("_NET_WM_STATE");
   xev.xclient.format = 32;
   xev.xclient.data.l[0] = add ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
   xev.xclient.data.l[1] = gdk_x11_atom_to_xatom (state1);
   xev.xclient.data.l[2] = gdk_x11_atom_to_xatom (state2);
-  XSendEvent(gdk_display, GDK_WINDOW_XID (gdk_get_default_root_window ()),
+  XSendEvent(GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), GDK_WINDOW_XID (gdk_get_default_root_window ()),
 		  False, SubstructureRedirectMask | SubstructureNotifyMask,
 		  &xev);
 }
