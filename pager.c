@@ -71,6 +71,7 @@ gint configure_event( GtkWidget *, GdkEvent *, gpointer );
 gint leave_notify_event( GtkWidget *, GdkEvent *, gpointer );
 gint expose_event( GtkWidget *, GdkEventExpose *, gpointer );
 gint button_press_event( GtkWidget *, GdkEventButton *, gpointer );
+gint scroll_event( GtkWidget *, GdkEventScroll *, gpointer );
 gint button_release_event( GtkWidget *, GdkEventButton *, gpointer );
 gint motion_notify_event( GtkWidget *, GdkEventMotion *, gpointer );
 
@@ -130,12 +131,15 @@ int main( int argc, char *argv[] )
 		     (GCallback) button_release_event, NULL );
   g_signal_connect( GTK_OBJECT( drawing_area ), "leave_notify_event",
 		     (GCallback) leave_notify_event, NULL );
+  g_signal_connect ( GTK_OBJECT( drawing_area), "scroll_event",
+                     (GCallback) scroll_event, NULL );
   gtk_widget_set_events( drawing_area, GDK_EXPOSURE_MASK
 			            | GDK_LEAVE_NOTIFY_MASK
 			            | GDK_BUTTON_PRESS_MASK
                                     | GDK_BUTTON_RELEASE_MASK
 		                    | GDK_POINTER_MOTION_MASK
-		                    | GDK_POINTER_MOTION_HINT_MASK );
+		                    | GDK_POINTER_MOTION_HINT_MASK
+                                    | GDK_SCROLL_MASK );
 
   /* Initialize and draw the pixmap */
   g_signal_connect( GTK_OBJECT( drawing_area ), "expose_event",
@@ -207,7 +211,7 @@ gint leave_notify_event( GtkWidget *widget, GdkEvent *event, gpointer data )
     draw_tooltip();
   }
   return TRUE;
-}  
+}
 
 gint button_press_event( GtkWidget *widget, GdkEventButton *event, gpointer d )
 {
@@ -243,7 +247,34 @@ gint button_press_event( GtkWidget *widget, GdkEventButton *event, gpointer d )
     offset_x = x - w->w.x;
     offset_y = y - w->w.y;
   }
+
   return TRUE;
+
+}
+
+gint scroll_event( GtkWidget *widget, GdkEventScroll *event, gpointer d )
+{
+  char cmd[64];
+  int x, y;
+
+  mouse_x = x = (int) event->x;
+  mouse_y = y = (int) event->y;
+
+  if( !(x % ws_width) || !(y % ws_height) ) /* WS border */
+    return TRUE;
+
+  /* Button4 is for selecting the previous workspace */
+  if( event->direction == GDK_SCROLL_UP ) {
+    send_command( "(pager-select 'previous)" );
+
+  }
+
+  /* Button5 is for selecting the next workspace */
+  else if( event->direction == GDK_SCROLL_DOWN ){
+    send_command( "(pager-select 'next)" );
+  }
+  return TRUE;
+
 }
 
 gint motion_notify_event( GtkWidget *widget, GdkEventMotion *event, gpointer d )
@@ -397,7 +428,7 @@ void draw_pager( GtkWidget *widget )
       box( hilit_bg, FALSE, vp_x, vp_y, vp_width-1, vp_height-1 );
       gdk_draw_line(pixmap,gc[hilit_bg],vp_x    ,               vp_y + 2 , vp_width-1 + vp_x - 2, vp_height-1 + vp_y    );
       gdk_draw_line(pixmap,gc[hilit_bg],vp_x    , vp_height-1 + vp_y - 2 , vp_width-1 + vp_x - 2,               vp_y    );
-    
+
       gdk_draw_line(pixmap,gc[hilit_bg],vp_x + 2,               vp_y     , vp_width-1 + vp_x    , vp_height-1 + vp_y - 2);
       gdk_draw_line(pixmap,gc[hilit_bg],vp_x + 2, vp_height-1 + vp_y     , vp_width-1 + vp_x    ,               vp_y + 2);
     }
@@ -607,7 +638,7 @@ static void wmspec_change_state( gboolean add, GdkWindow *window,
   XEvent xev;
   #define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
   #define _NET_WM_STATE_ADD           1    /* add/set property */
-  #define _NET_WM_STATE_TOGGLE        2    /* toggle property  */  
+  #define _NET_WM_STATE_TOGGLE        2    /* toggle property  */
   xev.xclient.type = ClientMessage;
   xev.xclient.serial = 0;
   xev.xclient.send_event = True;
