@@ -1,5 +1,7 @@
 Version 0.7.5 (2010-XX-XX, 鳥追い Tori-oi)
 
+     * New or updated requirements:
+        + sawfish 1.6.1 -> 1.7.0
      * Add CFLAGS to disable deprecated GTK+/GLIB functions/macros
      * Modernize SawfishPager:
        - replace gtk_signal_connect by g_signal_connect
@@ -8,12 +10,15 @@ Version 0.7.5 (2010-XX-XX, 鳥追い Tori-oi)
        - replace gdk_draw_pixmap by gdk_draw_drawable
        - replace gdk_pixmap_unref by g_object_unref
        - replace gdk_color_alloc by gdk_colormap_alloc_color
-		-- Christopher Bratusek
+       - replace gdk_display by gdk_display_get_default
+     * added the abbility to change the current workspace or
+       viewport (user-choosable, workspace is default) by
+       scrolling the mouse-wheel over the pager
+                -- Christopher Bratusek
 
      * Indifferent pager fix
        Pager did not respond to clicks / print tooltip if you require
-       the pager module somewhere else from ~/.sawfish/rc. This is
-       fixed.
+       the pager module somewhere else from ~/.sawfish/rc. This is fixed.
      * New option 'pager-output-stream'.
      * README and INSTALL are not useless any more.
                 -- Teika kazura
