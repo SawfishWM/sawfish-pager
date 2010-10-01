@@ -1,8 +1,7 @@
-Version 0.7.5 (2010-XX-XX, 鳥追い Tori-oi)
+Version 0.7.5 (2010-10-02, 鳥追い Tori-oi)
 
      * New or updated requirements:
         + sawfish 1.6.1 -> 1.7.0
-     * Add CFLAGS to disable deprecated GTK+/GLIB functions/macros
      * Modernize SawfishPager:
        - replace gtk_signal_connect by g_signal_connect
        - replace GTK_SIGNAL_FUNC by G_CALLBACK
