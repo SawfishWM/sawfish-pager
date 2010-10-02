@@ -1,8 +1,8 @@
-AC_INIT(Sawfish-Pager, 0.7.5)
+AC_INIT(Sawfish-Pager, 0.90.0)
 
-version="0.7.5"
+version="0.90.0"
 AC_SUBST(version)
-CODE_NAME="Tori-oi"
+CODE_NAME="Volle Fahrt voraus!"
 
 AC_CONFIG_HEADER([config.h])
 
