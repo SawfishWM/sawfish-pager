@@ -1,3 +1,9 @@
+Version 0.90.0 (2010-10-24, Volle Fahrt Voraus)
+
+     * added autohiding ability
+     * renamed the binary to sawfishpager, to get a better WM_CLASS
+     		-- Christopher Bratusek
+
 Version 0.7.5 (2010-10-02, 鳥追い Tori-oi)
 
      * New or updated requirements:
