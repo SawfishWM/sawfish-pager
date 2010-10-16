@@ -628,6 +628,8 @@ Button3-Move   drag window"))
 	       (if edge-flip-enabled
 	           (add-hook 'enter-flipper-hook pager-show))
 	       (add-hook 'enter-workspace-hook pager-show))
+	(let ((pager-unhide-time 0))
+	      (pager-show))
 	(if edge-flip-enabled
 	    (remove-hook 'enter-flipper-hook pager-show))
 	(remove-hook 'enter-workspace-hook pager-show)))
