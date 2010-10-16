@@ -628,14 +628,16 @@ Button3-Move   drag window"))
 	       (if edge-flip-enabled
 	           (add-hook 'enter-flipper-hook pager-show))
 	       (add-hook 'enter-workspace-hook pager-show))
-	(let ((pager-unhide-time 0))
-	      (pager-show))
+	(pager-unhide)
 	(if edge-flip-enabled
 	    (remove-hook 'enter-flipper-hook pager-show))
 	(remove-hook 'enter-workspace-hook pager-show)))
 
   (define (pager-hide)
     (hide-window (get-window-by-class-re "Sawfishpager")))
+
+  (define (pager-unhide)
+    (make-timer (lambda () (show-window (get-window-by-class-re "Sawfishpager"))) 3))
 
   (define (pager-show)
     (show-window (get-window-by-class-re "Sawfishpager"))
