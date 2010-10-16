@@ -34,10 +34,13 @@
 	    pager-goto
 	    pager-move-window
 	    pager-tooltip
-	    pager-select)
+	    pager-select
+	    pager-show
+	    pager-hide)
 
     (open rep
 	  rep.io.files
+	  rep.io.timers
 	  rep.io.processes
 	  rep.structures
 	  rep.system
@@ -51,7 +54,9 @@
 	  sawfish.wm.viewport
 	  sawfish.wm.commands.viewport-extras
 	  sawfish.wm.windows
-	  sawfish.wm.workspace)
+	  sawfish.wm.windows.subrs
+	  sawfish.wm.workspace
+	  sawfish.wm.ext.edge-flip)
 
 ;;; Customization code contributed by Ryan Lovett <ryan@ocf.Berkeley.EDU>
   (defgroup pager "Pager")
@@ -176,6 +181,19 @@
     :type boolean
     :group pager)
 
+  (defcustom pager-autohide-enable nil
+    "Whether to autohide the pager and only show it, when
+switchting workspace or viewport."
+    :type boolean
+    :group pager
+    :after-set (lambda () (pager-autohide)))
+
+  (defcustom pager-unhide-time 5
+    "How long (in seconds) to show the pager then autohiding it."
+    :type number
+    :range ( 3 . 60 )
+    :group pager)
+
   (defcustom pager-select-type 'workspace
     "When scrolling with mouse on pager, select either next
 workspace, viewport or none."
@@ -183,9 +201,9 @@ workspace, viewport or none."
     :group pager)
 
   (defvar pager-executable
-    (if (file-exists-p "~/.sawfish/pager")
-	(concat (user-home-directory) "/.sawfish/pager")
-      (concat sawfish-exec-directory "/pager")))
+    (if (file-exists-p "~/.sawfish/sawfishpager")
+	(concat (user-home-directory) "/.sawfish/sawfishpager")
+      (concat sawfish-exec-directory "/sawfishpager")))
 
   (defvar pager-output-stream nil
     "Pager's output stream.")
@@ -500,6 +518,7 @@ Optional STOP, if non-nil, stops the pager instead."
       (send-size t t)
       (send-viewport)
       (send-focus)
+      (pager-autohide)
       (condition-case err-info
 	(mapc (lambda (hook)
 		(unless (in-hook-p (car hook) (symbol-value (cdr hook)))
@@ -603,6 +622,22 @@ Button3-Move   drag window"))
 	  (move-viewport-previous)
 	(move-viewport-next))))
 
+  (define (pager-autohide)
+    (if pager-autohide-enable
+        (progn (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) 3)
+	       (if edge-flip-enabled
+	           (add-hook 'enter-flipper-hook pager-show))
+	       (add-hook 'enter-workspace-hook pager-show))
+	(if edge-flip-enabled
+	    (remove-hook 'enter-flipper-hook pager-show))
+	(remove-hook 'enter-workspace-hook pager-show)))
+
+  (define (pager-hide)
+    (hide-window (get-window-by-class-re "Sawfishpager")))
+
+  (define (pager-show)
+    (show-window (get-window-by-class-re "Sawfishpager"))
+    (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) pager-unhide-time))
 
   ;; Push this module into the module 'user'.
   ;; pager.c invokes functions in this module via client-eval which
