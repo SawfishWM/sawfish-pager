@@ -24,9 +24,9 @@
 # the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 
 CFLAGS = @GTK_CFLAGS@ @IMAGE_LOADER_CFLAGS@ #-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
-LDFLAGS = -Wl,-rpath @SAWFISH_CLIENT_LIB_DIR@ @SAWFISH_CLIENT_LIB_DIR@/client.so @GTK_LIBS@ @IMAGE_LOADER_LIBS@
+LDFLAGS = -Wl,-rpath @SAWFISH_CLIENT_LIB_DIR@ @SAWFISH_CLIENT_LIB_DIR@/client.so @GTK_LIBS@ @SAWFISH_LIBS@ @IMAGE_LOADER_LIBS@
 
-all: pager pager.jlc
+all: sawfishpager pager.jlc
 
 %.jlc: %.jl
 	sawfish --batch --no-rc compiler -f compile-batch $^
@@ -36,12 +36,12 @@ install: all
 	mkdir -p $(DESTDIR)@PAGER_JL_DIR@
 	install -m644 pager.jl $(DESTDIR)@PAGER_JL_DIR@
 	install -m644 pager.jlc $(DESTDIR)@PAGER_JL_DIR@
-	install -m755 pager $(DESTDIR)@PAGER_C_DIR@
+	install -m755 sawfishpager $(DESTDIR)@PAGER_C_DIR@
 
 uninstall:
 	rm -f $(DESTDIR)@PAGER_JL_DIR@/pager.jl
 	rm -f $(DESTDIR)@PAGER_JL_DIR@/pager.jlc
-	rm -f $(DESTDIR)@PAGER_C_DIR@/pager
+	rm -f $(DESTDIR)@PAGER_C_DIR@/sawfishpager
 
 gitclean: distclean
 	rm -rf autom4te.cache
@@ -54,4 +54,4 @@ distclean: clean
 	rm -f sawfish-pager.pc
 
 clean:
-	rm -f pager pager.jlc
+	rm -f sawfishpager pager.jlc
