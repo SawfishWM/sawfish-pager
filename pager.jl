@@ -36,7 +36,8 @@
 	    pager-tooltip
 	    pager-select
 	    pager-show
-	    pager-hide)
+	    pager-hide
+	    pager-unhide)
 
     (open rep
 	  rep.io.files
@@ -183,10 +184,16 @@
 
   (defcustom pager-autohide-enable nil
     "Whether to autohide the pager and only show it, when
-switchting workspace or viewport."
+entering a new workspace."
     :type boolean
     :group pager
-    :after-set (lambda () (pager-autohide)))
+    :after-set (lambda () (pager-autounhide/workspace)))
+
+  (defcustom pager-unhide-when-flip nil
+    "Also unhide the pager when fliping edges or hitting the screen-border."
+    :type boolean
+    :group pager
+    :after-set (lambda () (pager-autounhide/edge-flip)))
 
   (defcustom pager-unhide-time 5
     "How long (in seconds) to show the pager then autohiding it."
@@ -207,7 +214,7 @@ workspace, viewport or none."
 
   (defvar pager-output-stream nil
     "Pager's output stream.")
-  
+
   ;; Remembers the number of workspaces...
   (define ws-limits)
 
@@ -282,7 +289,7 @@ workspace, viewport or none."
 	     (l1 (if pager-show-all-workspaces
 		     (or (mapcar
                           (lambda (ws)
-                            (append 
+                            (append
                              (nth (- ws (car ws-limits)) ws-list)
                              (if (eql ws current-workspace)
                                  `(,viewport-x-offset ,viewport-y-offset)
@@ -625,23 +632,37 @@ Button3-Move   drag window"))
   (define (pager-autohide)
     (if pager-autohide-enable
         (progn (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) 5)
-	       (if edge-flip-enabled
-	           (add-hook 'enter-flipper-hook pager-show))
-	       (add-hook 'enter-workspace-hook pager-show))
+	       (if pager-unhide-when-flip
+	           (add-hook 'enter-flipper-hook pager-unhide))
+	       (add-hook 'enter-workspace-hook pager-unhide))
 	(pager-unhide)
-	(if edge-flip-enabled
-	    (remove-hook 'enter-flipper-hook pager-show))
-	(remove-hook 'enter-workspace-hook pager-show)))
+	(if pager-unhide-when-flip
+	    (remove-hook 'enter-flipper-hook pager-unhide))
+	(remove-hook 'enter-workspace-hook pager-unhide)))
+
+  (define (pager-autounhide/workspace)
+    (if pager-autohide-enable
+        (progn (pager-hide)
+	       (add-hook 'enter-workspace-hook pager-unhide))
+      (pager-unhide)
+      (remove-hook 'enter-workspace-hook pager-unhide)))
+
+  (define (pager-autounhide/edge-flip)
+    (if pager-unhide-when-flip
+        (progn (pager-hide)
+	       (add-hook 'enter-flipper-hook pager-unhide)
+      (pager-unhide)
+      (remove-hook 'enter-flipper-hook pager-unhide))))
 
   (define (pager-hide)
     (hide-window (get-window-by-class-re "Sawfishpager")))
 
   (define (pager-unhide)
-    (make-timer (lambda () (show-window (get-window-by-class-re "Sawfishpager"))) 5))
-
-  (define (pager-show)
     (show-window (get-window-by-class-re "Sawfishpager"))
     (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) pager-unhide-time))
+
+  (define (pager-show)
+    (show-window (get-window-by-class-re "Sawfishpager")))
 
   ;; Push this module into the module 'user'.
   ;; pager.c invokes functions in this module via client-eval which
