@@ -624,7 +624,7 @@ Button3-Move   drag window"))
 
   (define (pager-autohide)
     (if pager-autohide-enable
-        (progn (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) 3)
+        (progn (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) 5)
 	       (if edge-flip-enabled
 	           (add-hook 'enter-flipper-hook pager-show))
 	       (add-hook 'enter-workspace-hook pager-show))
@@ -637,7 +637,7 @@ Button3-Move   drag window"))
     (hide-window (get-window-by-class-re "Sawfishpager")))
 
   (define (pager-unhide)
-    (make-timer (lambda () (show-window (get-window-by-class-re "Sawfishpager"))) 3))
+    (make-timer (lambda () (show-window (get-window-by-class-re "Sawfishpager"))) 5))
 
   (define (pager-show)
     (show-window (get-window-by-class-re "Sawfishpager"))
