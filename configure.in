@@ -1,8 +1,8 @@
-AC_INIT(Sawfish-Pager, 0.90.0)
+AC_INIT(Sawfish-Pager, 0.90.1)
 
-version="0.90.0"
+version="0.90.1"
 AC_SUBST(version)
-CODE_NAME="Volle Fahrt voraus!"
+CODE_NAME="Stomping Jack Flash"
 
 AC_CONFIG_HEADER([config.h])
 
@@ -37,7 +37,7 @@ AC_SUBST(GTK_MIN_VER)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
-SAWFISH_MIN_VER="1.7.0"
+SAWFISH_MIN_VER="2.90.0"
 
 PKG_CHECK_MODULES(SAWFISH, sawfish >= ${SAWFISH_MIN_VER}
 		  ,
