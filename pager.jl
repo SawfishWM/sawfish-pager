@@ -55,8 +55,7 @@
 	  sawfish.wm.commands.viewport-extras
 	  sawfish.wm.windows
 	  sawfish.wm.windows.subrs
-	  sawfish.wm.workspace
-	  sawfish.wm.edge.flip)
+	  sawfish.wm.workspace)
 
 ;;; Customization code contributed by Ryan Lovett <ryan@ocf.Berkeley.EDU>
   (defgroup pager "Pager")
