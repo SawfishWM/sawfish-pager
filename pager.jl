@@ -631,26 +631,34 @@ Button3-Move   drag window"))
     (if pager-autohide-enable
         (progn (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) 5)
 	       (if pager-unhide-when-flip
-	           (add-hook 'enter-flipper-hook pager-unhide))
-	       (add-hook 'enter-workspace-hook pager-unhide))
+		   (unless (in-hook-p 'enter-flipper-hook pager-unhide)
+	             (add-hook 'enter-flipper-hook pager-unhide)))
+	       (unless (in-hook-p 'enter-workspace-hook pager-unhide)
+	         (add-hook 'enter-workspace-hook pager-unhide)))
 	(pager-unhide #:permanent t)
 	(if pager-unhide-when-flip
-	    (remove-hook 'enter-flipper-hook pager-unhide))
-	(remove-hook 'enter-workspace-hook pager-unhide)))
+	    (if (in-hook-p 'enter-flipper-hook pager-unhide)
+	      (remove-hook 'enter-flipper-hook pager-unhide)))
+	(if (in-hook-p 'enter-workspace-hook pager-unhide)
+	    (remove-hook 'enter-workspace-hook pager-unhide))))
 
   (define (pager-autounhide/workspace)
     (if pager-autohide-enable
         (progn (pager-hide)
-	       (add-hook 'enter-workspace-hook pager-unhide))
+	       (unless (in-hook-p 'enter-workspace-hook pager-unhide)
+	         (add-hook 'enter-workspace-hook pager-unhide)))
       (pager-unhide #:permanent t)
-      (remove-hook 'enter-workspace-hook pager-unhide)))
+      (if (in-hook-p 'enter-workspace-hook pager-unhide)
+	  (remove-hook 'enter-workspace-hook pager-unhide))))
 
   (define (pager-autounhide/edge-flip)
     (if pager-unhide-when-flip
         (progn (pager-hide)
-	       (add-hook 'enter-flipper-hook pager-unhide)
+	       (unless (in-hook-p 'enter-flipper-hook pager-unhide)
+		 (add-hook 'enter-flipper-hook pager-unhide))
       (pager-unhide)
-      (remove-hook 'enter-flipper-hook pager-unhide))))
+      (if (in-hook-p 'enter-flipper-hook pager-unhide)
+          (remove-hook 'enter-flipper-hook pager-unhide)))))
 
   (define (pager-hide)
     (hide-window (get-window-by-class-re "Sawfishpager")))
