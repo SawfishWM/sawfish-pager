@@ -635,7 +635,7 @@ Button3-Move   drag window"))
 	             (add-hook 'enter-flipper-hook pager-unhide)))
 	       (unless (in-hook-p 'enter-workspace-hook pager-unhide)
 	         (add-hook 'enter-workspace-hook pager-unhide)))
-	(pager-unhide #:permanent t)
+	(make-timer (lambda () (pager-unhide #:permanent t)) 5)
 	(if pager-unhide-when-flip
 	    (if (in-hook-p 'enter-flipper-hook pager-unhide)
 	      (remove-hook 'enter-flipper-hook pager-unhide)))
