@@ -1,3 +1,11 @@
+Version 0.90.1 (2010-12-XX, Keep On Jumping)
+
+     * fixed a small bug in autohiding ability
+     * use in-hook-p for autohiding setters
+     * don't open the edge-flip module (useless)
+     * decreased minimum sawfish version: 1,7,0,1
+     		-- Christopher Bratusek
+
 Version 0.90.0 (2010-10-24, Volle Fahrt Voraus)
 
      * added autohiding ability
