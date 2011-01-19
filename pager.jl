@@ -629,7 +629,7 @@ Button3-Move   drag window"))
 
   (define (pager-autohide)
     (if pager-autohide-enable
-        (progn (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) 5)
+        (progn (make-timer (lambda () (hide-window (get-window-by-class "Sawfishpager" #:regex t))) 5)
 	       (if pager-unhide-when-flip
 		   (unless (in-hook-p 'enter-flipper-hook pager-unhide)
 	             (add-hook 'enter-flipper-hook pager-unhide)))
@@ -637,10 +637,8 @@ Button3-Move   drag window"))
 	         (add-hook 'enter-workspace-hook pager-unhide)))
 	(make-timer (lambda () (pager-unhide #:permanent t)) 5)
 	(if pager-unhide-when-flip
-	    (if (in-hook-p 'enter-flipper-hook pager-unhide)
-	      (remove-hook 'enter-flipper-hook pager-unhide)))
-	(if (in-hook-p 'enter-workspace-hook pager-unhide)
-	    (remove-hook 'enter-workspace-hook pager-unhide))))
+	  (remove-hook 'enter-flipper-hook pager-unhide))
+	(remove-hook 'enter-workspace-hook pager-unhide)))
 
   (define (pager-autounhide/workspace)
     (if pager-autohide-enable
@@ -655,22 +653,20 @@ Button3-Move   drag window"))
     (if pager-unhide-when-flip
         (progn (pager-hide)
 	       (unless (in-hook-p 'enter-flipper-hook pager-unhide)
-		 (add-hook 'enter-flipper-hook pager-unhide))
+		 (add-hook 'enter-flipper-hook pager-unhide)))
       (pager-unhide)
-      (if (in-hook-p 'enter-flipper-hook pager-unhide)
-          (remove-hook 'enter-flipper-hook pager-unhide)))))
+      (remove-hook 'enter-flipper-hook pager-unhide)))
 
   (define (pager-hide)
-    (hide-window (get-window-by-class-re "Sawfishpager")))
+    (hide-window (get-window-by-class "Sawfishpager" #:regex t)))
 
   (define (pager-unhide #!key permanent)
     (if permanent
-        (show-window (get-window-by-class-re "Sawfishpager"))
-    (show-window (get-window-by-class-re "Sawfishpager"))
-    (make-timer (lambda () (hide-window (get-window-by-class-re "Sawfishpager"))) pager-unhide-time)))
+        (show-window (get-window-by-class "Sawfishpager" #:regex t))
+    (show-window (get-window-by-class "Sawfishpager" #:regex t))
+    (make-timer (lambda () (hide-window (get-window-by-class "Sawfishpager" #:regex t))) pager-unhide-time)))
 
   ;; Push this module into the module 'user'.
   ;; pager.c invokes functions in this module via client-eval which
   ;; lives in 'user'.
-  (user-require (structure-name (current-structure)))
-  )
+  (user-require (structure-name (current-structure))))
