@@ -38,7 +38,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc COPYING NEWS README TODO
-%{_libdir}/sawfish/%{sawfish_ver}/*/pager
+%{_libdir}/sawfish/%{sawfish_ver}/*/sawfishpager
 %{_datadir}/sawfish/%{sawfish_ver}/lisp/sawfish/wm/ext/
 
 
