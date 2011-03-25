@@ -1,10 +1,12 @@
-Version 0.90.1 (2010-12-XX, Keep On Jumping)
+Version 0.90.1 (2011-03-25, Keep On Jumping)
 
      * fixed two small bugs in autohiding ability
      * use in-hook-p for enabling autohiding-hook
      * don't open the edge-flip module (unused/deprecated)
      * updated for get-window-by-class changed introduced in Sawfish 1.8.0
      * bumped minimum Sawfish version to 1.8.0
+     * updated spec-file
+     * updated debian packaging-scripts (mostly) to the new spec
      		-- Christopher Bratusek
 
 Version 0.90.0 (2010-10-24, Volle Fahrt Voraus)

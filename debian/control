@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: Christopher Roy Bratusek <zanghar@freenet.de>
 Standards-Version: 3.6.2
 Build-Depends: debhelper (>= 3.4.4),
-               librep-dev (>= @REP_MIN_VER@),
-               libgtk2.0-dev (>= @GTK_MIN_VER@),
-               sawfish (>= 1:@SAWFISH_MIN_VER@),
+               librep-dev (>= 0.90.5),
+               libgtk2.0-dev (>= 2.12),
+               sawfish (>= 1:1.8.0),
                bc
 Homepage: http://sawfish.wikia.com
 

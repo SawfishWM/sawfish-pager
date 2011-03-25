@@ -94,8 +94,6 @@ AC_SUBST(gitdate)
 AC_CONFIG_FILES([
 Makefile
 sawfish-pager.pc
-debian/control
-debian/changelog
 sawfish-pager.ebuild
 sawfish-pager.spec
 ])
