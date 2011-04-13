@@ -45,7 +45,6 @@ PKG_CHECK_MODULES(SAWFISH, sawfish >= ${SAWFISH_MIN_VER}
 
 SAWFISH_VERSION=`pkg-config --modversion sawfish`
 SAWFISH_PREFIX=`pkg-config --variable=prefix sawfish`
-SAWFISH_HOST_TYPE=`pkg-config --variable=sawfishhosttype sawfish`
 SAWFISH_LIB_DIR=`pkg-config --variable=libdir sawfish`
 SAWFISH_IMAGE_LOADER=`pkg-config --variable=imageloader sawfish`
 
@@ -81,7 +80,7 @@ fi
 AC_SUBST(IMAGE_LOADER_CFLAGS)
 AC_SUBST(IMAGE_LOADER_LIBS)
 
-PAGER_C_DIR="${SAWFISH_LIB_DIR}/sawfish/${SAWFISH_VERSION}/${SAWFISH_HOST_TYPE}/"
+PAGER_C_DIR="${SAWFISH_LIB_DIR}/sawfish/${SAWFISH_VERSION}/"
 PAGER_JL_DIR="${SAWFISH_PREFIX}/share/sawfish/${SAWFISH_VERSION}/lisp/sawfish/wm/ext/"
 
 AC_SUBST(PAGER_C_DIR)
