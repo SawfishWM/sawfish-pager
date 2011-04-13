@@ -40,7 +40,8 @@ AC_SUBST(GTK_LIBS)
 SAWFISH_MIN_VER="1.8.0"
 
 PKG_CHECK_MODULES(SAWFISH, sawfish >= ${SAWFISH_MIN_VER}
-		  ,
+		  ,SAWFISH_CFLAGS="`pkg-config --cflags sawfish`"
+		  SAWFISH_LIBS="`pkg-config --libs sawfish`"
 		  ,AC_MSG_ERROR([Sawfish ${SAWFISH_MIN_VER} is required to compile Sawfish-Pager]))
 
 SAWFISH_VERSION=`pkg-config --modversion sawfish`
@@ -54,6 +55,8 @@ AC_SUBST(SAWFISH_MIN_VER)
 AC_SUBST(SAWFISH_PREFIX)
 AC_SUBST(SAWFISH_IMAGE_LOADER)
 AC_SUBST(SAWFISH_CLIENT_LIB_DIR)
+AC_SUBST(SAWFISH_CFLAGS)
+AC_SUBST(SAWFISH_LIBS)
 
 GDK_MIN_VER="2.12"
 AC_SUBST(GDK_MIN_VER)
