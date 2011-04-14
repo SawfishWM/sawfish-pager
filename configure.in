@@ -37,7 +37,7 @@ AC_SUBST(GTK_MIN_VER)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
-SAWFISH_MIN_VER="1.8.0"
+SAWFISH_MIN_VER="1.8.1"
 
 PKG_CHECK_MODULES(SAWFISH, sawfish >= ${SAWFISH_MIN_VER}
 		  ,SAWFISH_CFLAGS="`pkg-config --cflags sawfish`"
@@ -49,7 +49,7 @@ SAWFISH_PREFIX=`pkg-config --variable=prefix sawfish`
 SAWFISH_LIB_DIR=`pkg-config --variable=libdir sawfish`
 SAWFISH_IMAGE_LOADER=`pkg-config --variable=imageloader sawfish`
 
-SAWFISH_CLIENT_LIB_DIR="${REP_COMMON_EXEC_DIR}/sawfish/"
+SAWFISH_CLIENT_LIB_DIR="${REP_COMMON_EXEC_DIR}/sawfish"
 
 AC_SUBST(SAWFISH_MIN_VER)
 AC_SUBST(SAWFISH_PREFIX)
@@ -83,8 +83,8 @@ fi
 AC_SUBST(IMAGE_LOADER_CFLAGS)
 AC_SUBST(IMAGE_LOADER_LIBS)
 
-PAGER_C_DIR="${SAWFISH_LIB_DIR}/sawfish/${SAWFISH_VERSION}/"
-PAGER_JL_DIR="${SAWFISH_PREFIX}/share/sawfish/${SAWFISH_VERSION}/lisp/sawfish/wm/ext/"
+PAGER_C_DIR="${SAWFISH_LIB_DIR}/sawfish"
+PAGER_JL_DIR="${SAWFISH_PREFIX}/share/sawfish/lisp/sawfish/wm/ext"
 
 AC_SUBST(PAGER_C_DIR)
 AC_SUBST(PAGER_JL_DIR)
