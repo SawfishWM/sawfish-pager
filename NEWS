@@ -1,3 +1,11 @@
+Version 0.90.2 (2011-04-XX, The One Russian)
+     * bumped minimum Sawfish to 1.8.1
+     * updated for install-path changes in Sawfish 1.8.1
+                -- Christopher Bratusek
+
+     * allow rpm-build (and others) to modify CFLAGS for build
+                -- Kim B. Heino
+
 Version 0.90.1 (2011-03-25, Keep On Jumping)
 
      * fixed two small bugs in autohiding ability
