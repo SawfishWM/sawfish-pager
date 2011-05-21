@@ -52,7 +52,7 @@ debclean: gitclean
 	rm -rf m4/* ltmain.sh configure.[!.in]* libtool config.h.in
 
 distclean: clean
-	rm -f Makefile config.cache config.h config.log config.status
+	rm -f Makefile config.cache config.log config.status
 	rm -f sawfish-pager.pc
 
 clean:
