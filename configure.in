@@ -1,0 +1,138 @@
+AC_INIT(Sawfish-Pager, 0.90.3)
+
+version="0.90.3"
+AC_SUBST(version)
+CODE_NAME="Stomping Jack Flash"
+
+AC_CONFIG_HEADER([config.h])
+
+AC_CONFIG_MACRO_DIR([m4])
+
+AC_PROG_CC
+AC_PROG_LIBTOOL
+AC_PROG_INSTALL
+
+REP_MIN_VER="0.90.5"
+
+PKG_CHECK_MODULES(REP, librep >= ${REP_MIN_VER}
+		  ,
+		  ,AC_MSG_ERROR([librep ${REP_MIN_VER} is required to compile Sawfish-Pager]))
+
+REP_COMMON_EXEC_DIR=`pkg-config --variable=repcommonexecdir librep`
+REP_VERSION=`pkg-config --modversion librep`
+
+AC_SUBST(REP_MIN_VER)
+AC_SUBST(REP_COMMON_EXEC_DIR)
+
+GTK_MIN_VER="2.12"
+
+PKG_CHECK_MODULES(GTK, gtk+-2.0 >= ${GTK_MIN_VER}
+		  ,GTK_CFLAGS="`pkg-config --cflags gtk+-2.0`"
+		  GTK_LIBS="`pkg-config --libs gtk+-2.0`"
+		  ,AC_MSG_ERROR([GTK+ ${GTK_MIN_VER} is required to compile Sawfish-Pager]))
+
+GTK_VERSION=`pkg-config --modversion gtk+-2.0`
+
+AC_SUBST(GTK_MIN_VER)
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
+
+SAWFISH_MIN_VER="1.8.1"
+
+PKG_CHECK_MODULES(SAWFISH, sawfish >= ${SAWFISH_MIN_VER}
+		  ,SAWFISH_CFLAGS="`pkg-config --cflags sawfish`"
+		  SAWFISH_LIBS="`pkg-config --libs sawfish`"
+		  ,AC_MSG_ERROR([Sawfish ${SAWFISH_MIN_VER} is required to compile Sawfish-Pager]))
+
+SAWFISH_VERSION=`pkg-config --modversion sawfish`
+SAWFISH_PREFIX=`pkg-config --variable=prefix sawfish`
+SAWFISH_LIB_DIR=`pkg-config --variable=libdir sawfish`
+SAWFISH_IMAGE_LOADER=`pkg-config --variable=imageloader sawfish`
+
+SAWFISH_CLIENT_LIB_DIR="${REP_COMMON_EXEC_DIR}/sawfish"
+
+AC_SUBST(SAWFISH_MIN_VER)
+AC_SUBST(SAWFISH_PREFIX)
+AC_SUBST(SAWFISH_IMAGE_LOADER)
+AC_SUBST(SAWFISH_CLIENT_LIB_DIR)
+AC_SUBST(SAWFISH_CFLAGS)
+AC_SUBST(SAWFISH_LIBS)
+
+GDK_MIN_VER="2.12"
+AC_SUBST(GDK_MIN_VER)
+
+if test ${SAWFISH_IMAGE_LOADER} = "gdk-pixbuf-xlib"; then
+
+	PKG_CHECK_MODULES(GDK, gdk-pixbuf-xlib-2.0 >= ${GDK_MIN_VER}
+			,IMAGE_LOADER_CFLAGS="`pkg-config --cflags gdk-pixbuf-xlib-2.0`"
+			IMAGE_LOADER_LIBS="`pkg-config --libs gdk-pixbuf-xlib-2.0`"
+			IMAGE_LOADER="GDK Pixbuf Xlib"
+			,AC_MSG_ERROR([GDK Pixubf Xlib ${GDK_MIN_VER} is required to compile Sawfish-Pager]))
+
+else
+
+	PKG_CHECK_MODULES(IMLIB1, imlib >= 1.9
+			,IMAGE_LOADER_CFLAGS="`pkg-config --cflags imlib`"
+			IMAGE_LOADER_LIBS="`pkg-config --libs imlib`"
+			IMAGE_LOADER="Imlib 1"
+			,AC_MSG_ERROR([Imlib1 1.9 is required to compile Sawfish-Pager]))
+
+
+fi
+
+AC_SUBST(IMAGE_LOADER_CFLAGS)
+AC_SUBST(IMAGE_LOADER_LIBS)
+
+PAGER_C_DIR="${SAWFISH_LIB_DIR}/sawfish"
+PAGER_JL_DIR="${SAWFISH_PREFIX}/share/sawfish/lisp/sawfish/wm/ext"
+
+AC_SUBST(PAGER_C_DIR)
+AC_SUBST(PAGER_JL_DIR)
+
+gitdate=`date +%y%m%d`
+
+AC_SUBST(gitdate)
+
+AC_CONFIG_FILES([
+Makefile
+sawfish-pager.pc
+sawfish-pager.ebuild
+sawfish-pager.spec
+])
+
+AC_OUTPUT
+
+mv sawfish-pager.ebuild sawfish-pager-$version.ebuild
+
+echo "
+  == == == == == == == == == == == == ==
+
+  sawfishpager:	$version '$CODE_NAME'
+
+  == == == == == == == == == == == == ==
+
+  prefix:	$SAWFISH_PREFIX
+  pager.c dir:	$PAGER_C_DIR
+  pager.jl dir:	$PAGER_JL_DIR
+
+  == == == == == == == == == == == == ==
+
+  compiler:	$CC
+  cflags:	$CFLAGS $DEVELOPMENT_CFLAGS
+  preprocessor:	$CPP
+  cppflags:	$CPPFLAGS
+  ldflags:	$LDFLAGS
+  makeflags:	$MAKEFLAGS
+
+  == == == == == == == == == == == == ==
+
+  rep:		$REP_VERSION
+  gtk+:		$GTK_VERSION
+  sawfish:	$SAWFISH_VERSION
+
+  == == == == == == == == == == == == ==
+
+  image loader:	$IMAGE_LOADER
+
+  == == == == == == == == == == == == ==
+  "
