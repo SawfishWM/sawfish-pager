@@ -1,6 +1,6 @@
-AC_INIT(Sawfish-Pager, 0.90.1)
+AC_INIT(Sawfish-Pager, 0.90.3)
 
-version="0.90.1"
+version="0.90.3"
 AC_SUBST(version)
 CODE_NAME="Stomping Jack Flash"
 
