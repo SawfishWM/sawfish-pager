@@ -50,7 +50,7 @@ gitclean: distclean
 
 debclean: distclean
 	rm -rf m4/* aclocal.m4 autom4te.cache ltmain.sh configure
-	rm -f configure.*
+	rm -f configure.* install-sh libtool config.h.in
 
 distclean: clean
 	rm -f Makefile config.cache config.h config.log config.status
