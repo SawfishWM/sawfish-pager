@@ -1,3 +1,9 @@
+sawfish-pager (0.90.3~20110521-1nano) unstable; urgency=low
+
+  * New upstream GIT snapshot
+
+ -- Christopher Roy Bratusek <nano@tuxfamily.org>  Sat, 21 May 2011 10:35:45 +0200
+
 sawfish-pager (0.90.1-1nano) unstable; urgency=low
 
   * new upstream release
