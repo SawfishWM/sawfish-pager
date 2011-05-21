@@ -48,6 +48,10 @@ gitclean: distclean
 	rm -f aclocal.m4 configure
 	-fakeroot debian/rules clean sawfish-pager*.ebuild
 
+debclean: distclean
+	rm -rf m4/* aclocal.m4 autom4te.cache ltmain.sh configure
+	rm -f configure.*
+
 distclean: clean
 	rm -f Makefile config.cache config.h config.log config.status
 	rm -f sawfish-pager.pc
