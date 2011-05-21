@@ -49,8 +49,7 @@ gitclean: distclean
 	-fakeroot debian/rules clean sawfish-pager*.ebuild
 
 debclean: gitclean
-	rm -rf m4/* aclocal.m4 autom4te.cache ltmain.sh configure
-	rm -f configure.* install-sh libtool config.h.in
+	rm -rf m4/* ltmain.sh configure.* install-sh libtool config.h.in
 
 distclean: clean
 	rm -f Makefile config.cache config.h config.log config.status
