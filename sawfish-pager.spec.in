@@ -1,21 +1,20 @@
-%define sawfish_ver %(pkg-config --modversion sawfish)
-
 Name: sawfish-pager
 Version: @version@
-Release: 1%{?dist}
-Summary: Sawfish own window manager pager
+Release: 4%{?dist}
+Summary: Pager for Sawfish window manager
 License: GPLv2+
 Group: User Interface/Desktops
-Source: http://download.tuxfamily.org/sawfishpager/%{name}-%{version}.tar.bz2
-URL: http://download.tuxfamily.org/sawfishpager/
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: sawfish = %{sawfish_ver}
+Source0: http://download.tuxfamily.org/sawfishpager/%{name}-%{version}.tar.bz2
+URL: http://sawfish.wikia.com/
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRequires: gmp-devel
+BuildRequires: gtk2-devel
 BuildRequires: sawfish-devel >= @SAWFISH_MIN_VER@
-
+Requires: sawfish >= @SAWFISH_MIN_VER@
 
 %description
-A sawfish specific configurable pager map of your desktop with a
-viewport support.  It can be configured to follow where you are, or
+Sawfish specific configurable pager map of your desktop with a
+viewport support. It can be configured to follow where you are, or
 optionally show all workspaces at once.
 
 Check README from this package documentation how to activate.
@@ -28,21 +27,37 @@ Check README from this package documentation how to activate.
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %make_install
 
 %clean
-rm -rf $RPM_BUILD_ROOT
-
+rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root,-)
 %doc COPYING NEWS README TODO
-%{_libdir}/sawfish/%{sawfish_ver}/*/sawfishpager
-%{_datadir}/sawfish/%{sawfish_ver}/lisp/sawfish/wm/ext/
-
+%{_libdir}/sawfish/sawfishpager
+%{_datadir}/sawfish/lisp/sawfish/wm/ext/*
 
 %changelog
+* Wed Nov  2 2011 Kim B. Heino <b@bbbs.net> - 0.90.2-4
+- Rebuild
+
+* Mon Aug 15 2011 Kim B. Heino <b@bbbs.net> - 0.90.2-3
+- Don't update COPYING
+
+* Sun Aug 14 2011 Kim B. Heino <b@bbbs.net> - 0.90.2-2
+- Update COPYING file for correct FSF address
+- Simplify BuildRequires
+
+* Wed Jun 22 2011 Kim B. Heino <b@bbbs.net> - 0.90.2-1
+- Update to 0.90.2
+
+* Fri Apr 15 2011 Kim B. Heino <b@bbbs.net> - 0.90.1-2
+- Update buildrequirements
+
+* Sat Apr  2 2011 Kim B. Heino <b@bbbs.net> - 0.90.1-1
+- Update to 0.90.1
+
 * Sat Jan 23 2010 Kim B. Heino <b@bbbs.net> - 0.7.3-1
 - fix rpmlint warnings
 
