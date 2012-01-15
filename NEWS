@@ -1,3 +1,6 @@
+Version 0.90.3 (2012-XX-XX, )
+     * synced spec-file with Fedora [Kim B. Heino]
+
 Version 0.90.2 (2011-05-01, The One Russian)
      * bumped minimum Sawfish to 1.8.1
      * updated for install-path changes in Sawfish 1.8.1
