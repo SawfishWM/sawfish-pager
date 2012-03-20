@@ -256,11 +256,11 @@ workspace, viewport or none."
   (define-macro (scale val #!optional x up)
     (if x
 	(if up
-	    `(round (/ (* ,val (screen-width)) vp-width))
-	  `(round (/ (* ,val vp-width) (screen-width))))
+	    `(inexact->exact (round (/ (* ,val (screen-width)) vp-width)))
+	  `(inexact->exact (round (/ (* ,val vp-width) (screen-width)))))
       (if up
-	  `(round (/ (* ,val (screen-height)) vp-height))
-	`(round (/ (* ,val vp-height) (screen-height))))))
+	  `(inexact->exact (round (/ (* ,val (screen-height)) vp-height)))
+	`(inexact->exact (round (/ (* ,val vp-height) (screen-height)))))))
 
   (define (get-window-info w)
     (if (or (not (window-id w))
