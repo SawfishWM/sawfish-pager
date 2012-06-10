@@ -1,11 +1,5 @@
-sawfish-pager (0.90.3~20110521-1nano) unstable; urgency=low
+librep (0.90.3-1nano) unstable; urgency=low
 
-  * New upstream GIT snapshot
+  * New upstream stable release
 
- -- Christopher Roy Bratusek <nano@tuxfamily.org>  Sat, 21 May 2011 10:35:45 +0200
-
-sawfish-pager (0.90.1-1nano) unstable; urgency=low
-
-  * new upstream release
-
- -- Christopher Roy Bratusek <zanghar@freenet.de>  Sun, 03 Jan 2010 20:07:20 +0100
+ -- Christopher Roy Bratusek <nano@tuxfamily.org>  Sun, 10 Jun 2012 09:32:27 +0200
