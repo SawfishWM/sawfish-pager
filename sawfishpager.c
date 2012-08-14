@@ -32,6 +32,7 @@
 #include <sawfish/libclient.h>
 #include <sawfish/sawfish.h>
 #include <gdk/gdkx.h>
+#include <glib.h>
 
 enum { bg, hilit_bg, win, focus_win, win_border, vp_divider, ws_divider, vp_frame };
 int hatch = 0;
@@ -75,8 +76,7 @@ gint scroll_event( GtkWidget *, GdkEventScroll *, gpointer );
 gint button_release_event( GtkWidget *, GdkEventButton *, gpointer );
 gint motion_notify_event( GtkWidget *, GdkEventMotion *, gpointer );
 
-void
-wait_stdin( gpointer, gint, GdkInputCondition );
+gboolean wait_stdin( GIOChannel *source, GIOCondition condition, gpointer data );
 
 void make_background( void );
 void draw_pager( GtkWidget * );
@@ -118,9 +118,9 @@ int main( int argc, char *argv[] )
 		      G_CALLBACK( destroy_event ), NULL );
 
   /* Wait for input from standard input */
-  gdk_input_add( 0, GDK_INPUT_READ,
-		 &wait_stdin,
-		 drawing_area );
+  GIOChannel* channel = g_io_channel_unix_new(0);
+  g_io_add_watch(channel, (G_IO_IN | G_IO_HUP | G_IO_ERR), wait_stdin, drawing_area);
+  g_io_channel_unref(channel);
 
   /* Change the viewport when a button is pressed */
   g_signal_connect( GTK_OBJECT( drawing_area ), "motion_notify_event",
@@ -612,8 +612,7 @@ void parse_stdin()
     }
 }
 
-void
-wait_stdin( gpointer data, gint source, GdkInputCondition cond )
+gboolean wait_stdin( GIOChannel *source, GIOCondition condition, gpointer data )
 {
   parse_stdin();
   draw_pager( data );

@@ -1,3 +1,7 @@
+Version 0.99.0 (2012-XX-XX, Coming From The Rain)
+     * re-enable deprecation C-Flags in Makefile
+     * replace gdk_add_input by g_io_add_watch
+
 Version 0.90.3 (2012-03-26, Million Miles Away)
      * synced spec-file with Fedora [Kim B. Heino]
      * fixed a bug that made pager crash, if division
