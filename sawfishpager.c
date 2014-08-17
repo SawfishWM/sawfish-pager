@@ -224,8 +224,12 @@ gint button_press_event( GtkWidget *widget, GdkEventButton *event, gpointer d )
   mouse_x = x = (int) event->x;
   mouse_y = y = (int) event->y;
 
-  if( !(x % ws_width) || !(y % ws_height) ) /* WS border */
-    return TRUE;
+  if( !(x % ws_width) || !(y % ws_height) ) { /* WS border */
+    if( x == width - 1 )
+      x--;
+    if( y == height - 1 )
+      y--;
+  }
 
   /* Button1 changes viewport */
   if( event->button == 1 ) {
@@ -263,8 +267,12 @@ gint scroll_event( GtkWidget *widget, GdkEventScroll *event, gpointer d )
   mouse_x = x = (int) event->x;
   mouse_y = y = (int) event->y;
 
-  if( !(x % ws_width) || !(y % ws_height) ) /* WS border */
-    return TRUE;
+  if( !(x % ws_width) || !(y % ws_height) ) { /* WS border */
+    if( x == width - 1 )
+      x--;
+    if( y == height - 1 )
+      y--;
+  }
 
   /* Button4 is for selecting the previous workspace */
   if( event->direction == GDK_SCROLL_UP ) {
