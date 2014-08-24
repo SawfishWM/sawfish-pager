@@ -1,13 +1,34 @@
-This package was debianized by Christian Marillat <marillat@debian.org> on
-Fri, 12 Jul 2002 16:00:48 +0200.
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Sawfish
+Upstream-Contact: Christopher Roy Bratusek <nano@jpberlin.de>
+Source: http://sawfish.wikia.com/
 
-It was downloaded from http://dapfy.bei.t-online.de/sawfish/pager/
+Files: *
+Copyright: 2000 Satyaki Das
+           2002 Daniel Pfeiffer <occitan@esperanto.org>
+           2008-2014 Christopher Roy Bratusek <nano@jperlin.de>
+License: GPL-2
 
-Upstream Author: Daniel Pfeiffer <occitan@esperanto.org>
+Files: debian/*
+Copyright: 2002-2007 Christian Marillat
+           2006-2013 Rodrigo Gallardo
+           2013-2014 Christopher Roy Bratusek <nano@jpberlin.de>
+License: GPL-2
 
-Copyright: 2000 Satyaki Das, 2002 Daniel Pfeiffer
+License: GPL-2
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-  You should have received a copy of the GNU General Public License with the
-  Debian GNU/Linux distribution in file /usr/share/common-licenses/GPL; if
-  not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite
-  330, Boston, MA 02111-1307 USA
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+
+On Debian systems, the complete text of the GNU General Public License
+version 2 can be found in /usr/share/common-licenses/GPL-2 file.

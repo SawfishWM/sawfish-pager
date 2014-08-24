@@ -1,24 +1,24 @@
 Source: sawfish-pager
 Section: x11
 Priority: optional
-Maintainer: Christopher Roy Bratusek <nano@tuxfamily.org>
-Standards-Version: 3.6.2
+Maintainer: Christopher Roy Bratusek <nano@jpberlin.de>
+Standards-Version: 3.9.4
 Build-Depends: debhelper (>= 3.4.4),
-               librep-dev (>= 0.90.5),
+               librep-dev (>= 0.92.4),
                libgtk2.0-dev (>= 2.24),
                libgmp-dev,
-               sawfish (>= 1:1.8.0),
-               rep-gtk (>= 0.90.2),
+               sawfish (>= 1:1.10.99),
+               rep-gtk (>= 0.90.8.2),
                bc,
                autotools-dev,
-               automake1.11,
+               automake,
                autoconf,
                dh-autoreconf
 Homepage: http://sawfish.wikia.com
 
 Package: sawfish-pager
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, sawfish
 Description: A pager for the Sawfish window manager
  A pager is a map of your desktop. As maps go, it shows not only the visible
  part (your current viewport), but if you are so configured, also the parts
