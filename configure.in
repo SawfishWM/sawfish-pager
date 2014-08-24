@@ -1,8 +1,8 @@
-AC_INIT(Sawfish-Pager, 0.90.3)
+AC_INIT(Sawfish-Pager, 0.90.4)
 
-version="0.90.3"
+version="0.90.4"
 AC_SUBST(version)
-CODE_NAME="Stomping Jack Flash"
+CODE_NAME="Bonzai"
 
 AC_CONFIG_HEADER([config.h])
 
