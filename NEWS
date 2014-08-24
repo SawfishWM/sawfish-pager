@@ -1,5 +1,10 @@
-Version 0.99.0 (2012-XX-XX, Coming From The Rain)
-     * re-enable deprecation C-Flags in Makefile
+Version 0.90.4 (2014-08-24, Bonzai)
+     * Fix address of FSF
+                -- Togan M.
+     * improve debian packaging scripts
+                -- Christopher Bratusek
+     * Accept clicks on workspaces borders
+                -- Maxime Soulé
 
 Version 0.90.3 (2012-03-26, Million Miles Away)
      * synced spec-file with Fedora [Kim B. Heino]
