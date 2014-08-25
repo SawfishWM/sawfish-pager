@@ -1,8 +1,8 @@
-AC_INIT(Sawfish-Pager, 0.90.4)
+AC_INIT(Sawfish-Pager, 0.90.5)
 
-version="0.90.4"
+version="0.90.5"
 AC_SUBST(version)
-CODE_NAME="Bonzai"
+CODE_NAME="Raving Rabbid"
 
 AC_CONFIG_HEADER([config.h])
 
