@@ -1,3 +1,8 @@
+Version 0.90.5 (2017-XX-XX, Raving Rabbid)
+     * improve pager autohide feature on startup.
+       It now waits until pager is really mapped,
+       before trying to do anything
+
 Version 0.90.4 (2014-08-24, Bonzai)
      * Fix address of FSF
                 -- Togan M.
