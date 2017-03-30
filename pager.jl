@@ -45,6 +45,7 @@
 	  rep.io.processes
 	  rep.structures
 	  rep.system
+	  rep.regexp
 	  sawfish.wm.colors
 	  sawfish.wm.misc
 	  sawfish.wm.custom
@@ -524,7 +525,6 @@ Optional STOP, if non-nil, stops the pager instead."
       (send-size t t)
       (send-viewport)
       (send-focus)
-      (pager-autohide)
       (condition-case err-info
 	(mapc (lambda (hook)
 		(unless (in-hook-p (car hook) (symbol-value (cdr hook)))
@@ -628,18 +628,24 @@ Button3-Move   drag window"))
 	  (move-viewport-previous)
 	(move-viewport-next))))
 
-  (define (pager-autohide)
-    (if pager-autohide-enable
-        (progn (make-timer (lambda () (hide-window (get-window-by-class "Sawfishpager" #:regex t))) 5)
+  (define (pager-autohide w)
+    (if (string-match (window-class-name w) "Sawfishpager")
+      (if pager-autohide-enable
+          (progn (make-timer (lambda () (pager-hide)) 5)
 	       (if pager-unhide-when-flip
 		   (unless (in-hook-p 'enter-flipper-hook pager-unhide)
 	             (add-hook 'enter-flipper-hook pager-unhide)))
 	       (unless (in-hook-p 'enter-workspace-hook pager-unhide)
-	         (add-hook 'enter-workspace-hook pager-unhide)))
+	         (add-hook 'enter-workspace-hook pager-unhide))
+	       (when (in-hook-p 'map-notify-hook pager-autohide)
+	         (remove-hook 'map-notify-hook pager-autohide)))
 	(make-timer (lambda () (pager-unhide #:permanent t)) 5)
 	(if pager-unhide-when-flip
 	  (remove-hook 'enter-flipper-hook pager-unhide))
-	(remove-hook 'enter-workspace-hook pager-unhide)))
+	(remove-hook 'enter-workspace-hook pager-unhide))))
+
+  (unless batch-mode
+    (add-hook 'map-notify-hook pager-autohide))
 
   (define (pager-autounhide/workspace)
     (if pager-autohide-enable
