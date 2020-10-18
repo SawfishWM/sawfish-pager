@@ -232,6 +232,7 @@ workspace, viewport or none."
   (define pager-width)
   (define pager-height)
 
+  (define skip-sending nil)
   (define process nil)
   (define hooks
     '((after-move-hook . send-window)
@@ -480,7 +481,11 @@ workspace, viewport or none."
 		 pager-stickies-on-all-workspaces
 		 (window-get w 'sticky)))
 	(send-windows)
-      (send ?w (get-window-info w))))
+      (if skip-sending ;; don't send positions when viewport is changed. Or when window is repositioned.
+	()
+	(send ?w (get-window-info w))
+      )
+      ))
 
   ;; Tell the C program what to display.  For each window we send five
   ;; integers: window id, position and dimensions.
@@ -537,6 +542,7 @@ Optional STOP, if non-nil, stops the pager instead."
 
   (define (pager-goto w x y)
     "Change to viewport and/or workspace where the user clicked on the pager."
+    (setq skip-sending 1)
     (let ((ws (if pager-show-all-workspaces
 		  (+ (* pager-workspaces-per-column (quotient x ws-width))
 		     (quotient y ws-height))
@@ -553,7 +559,9 @@ Optional STOP, if non-nil, stops the pager instead."
 		       (% y1 (screen-height))))
       (and pager-focus
 	   (setq w (get-window-by-id w))
-	   (set-input-focus w))))
+	   (set-input-focus w)))
+    (setq skip-sending nil)
+    )
 
   (define (pager-change-depth w)
     "Raise or lower the window clicked on in the pager."
@@ -567,9 +575,10 @@ Optional STOP, if non-nil, stops the pager instead."
 		      ,upper
 		    ,var))))
 
-  (define (pager-move-window w x y width height mouse-x mouse-y)
+  (define (pager-move-window w x y width height mouse-x mouse-y #!optional skip)
     "Moves window with id ID to co-ordinates (X, Y) where (X, Y) is what the
 pager thinks the position of the window is."
+    (setq skip-sending skip)
     (when (setq w (get-window-by-id w))
       (bound (- 4 width) x (- pager-width 4))
       (bound (- 4 height) y (- pager-height 4))
@@ -599,7 +608,9 @@ pager thinks the position of the window is."
 		 (copy-window-to-workspace w orig-space new-space nil)
 		 (if (eql orig-space current-workspace)
 		     (delete-window-instance w))
-		 (move-window-to-workspace w orig-space new-space was-focused)))))))
+		 (move-window-to-workspace w orig-space new-space was-focused))))))
+    (setq skip-sending nil)
+    )
 
   (define (pager-tooltip #!optional id)
     "Show a tooltip for window ID, or remove it if no ID given."
